@@ -14,7 +14,11 @@
 #
 # - If installing full Xcode, it's better to install that first from the app
 #   store before running the bootstrap script. Otherwise, Homebrew can't access
-#   the Xcode libraries as the agreement hasn't been accepted yet.
+#   the Xcode libraries as the agreement hasn't been accepted yet. Otherwise, run
+#   the following:
+#
+# echo "Installing xcode-stuff"
+# xcode-select --install
 #
 # Reading:
 #
