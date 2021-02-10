@@ -55,6 +55,7 @@ brew install caskroom/cask/brew-cask
 
 CASKS=(
     firefox
+    github
     google-chrome
     google-drive
     iterm2
@@ -98,6 +99,14 @@ echo "Installing VSCode extensions..."
 VSCODE_EXTENSIONS=(
     esbenp.prettier-vscode
     jakebecker.elixir-ls
+    CoenraadS.bracket-pair-colorizer
+    Shan.code-settings-sync
+    formulahendry.auto-rename-tag
+    eamodio.gitlens
+    donjayamanne.githistory
+    xabikos.JavaScriptSnippets
+    kamikillerto.vscode-colorize
+    vscode-icons-team.vscode-icons
 )
 
 echo "Configuring OSX..."
