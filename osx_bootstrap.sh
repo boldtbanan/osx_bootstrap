@@ -95,7 +95,10 @@ echo "Installing VSCode extensions..."
 # code --list-extensions
 # code --install-extension ms-vscode.cpptools
 # code --uninstall-extension ms-vscode.csharp
-
+VSCODE_EXTENSIONS=(
+    esbenp.prettier-vscode
+    jakebecker.elixir-ls
+)
 
 echo "Configuring OSX..."
 
