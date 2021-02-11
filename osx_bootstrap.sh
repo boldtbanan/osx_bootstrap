@@ -197,7 +197,7 @@ dockutil --add '/Applications/Slack.app' --label 'Slack' --replacing 'Slack' --b
 dockutil --add '/Applications/Spotify.app' --label 'Spotify' --replacing 'Spotify' --after 'TV'
 dockutil --add '/Applications/Github Desktop.app' --label 'Github Desktop' --replacing 'Github Desktop' --after 'Spotify'
 dockutil --add '/Applications/Visual Studio Code.app' --label 'Visual Studio Code' --replacing 'Visual Studio Code' --after 'Github Desktop'
-dockutil --add '/Applications/iTerm.app' --label 'iTerm2' --replacing 'iTerm2' --after 'Visual Studio Codes'
+dockutil --add '/Applications/iTerm.app' --label 'iTerm' --replacing 'iTerm' --after 'Visual Studio Code'
 dockutil --add '/System/Applications/Utilities/Activity Monitor.app' --label 'Activity Monitor' --replacing 'Activity Monitor'
 
 killall Finder
@@ -218,6 +218,6 @@ else
 fi
 
 # Clone this repo locally so you have access to the other resources
-git clone https://github.com/boldtbanan/osx_bootstrap.git ~/Projects/osx_bootstrap
+[[ ! -d ~/Projects/osx_bootstrap ]] && git clone https://github.com/boldtbanan/osx_bootstrap.git ~/Projects/osx_bootstrap
 
 echo "Bootstrapping complete"
