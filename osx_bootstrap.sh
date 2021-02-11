@@ -4,7 +4,7 @@
 # 
 # Grab and run this file via
 #
-# curl -o- https://raw.githubusercontent.com/boldtbanan/osx_bootstrap/osx_bootstrap.sh | bash
+# curl -o- https://raw.githubusercontent.com/boldtbanan/osx_bootstrap/main/osx_bootstrap.sh | bash
 # 
 # This should be idempotent so it can be run multiple times.
 #
@@ -67,6 +67,7 @@ brew install npm
 brew install postgresql
 brew install svn
 brew install wget
+brew install xclip
 
 echo "Cleaning up..."
 brew cleanup
@@ -154,9 +155,6 @@ defaults write com.apple.dock tilesize -int 32
 defaults write com.apple.dock largesize -int 64
 defaults write com.apple.dock magnification -int 1
 
-#"Disable annoying backswipe in Chrome"
-defaults write com.google.Chrome AppleEnableSwipeNavigateWithScrolls -bool false
-
 #"Enabling Safari's debug menu"
 defaults write com.apple.Safari IncludeInternalDebugMenu -bool true
 
@@ -189,7 +187,7 @@ dockutil --remove Podcasts
 dockutil --remove News
 dockutil --remove 'App Store'
 
-dockutil --add '/Applications/Google Chrome.app' --label 'Google Chrome' --replacing 'Google Chrome' --after 'Firefox'
+dockutil --add '/Applications/Google Chrome.app' --label 'Google Chrome' --replacing 'Google Chrome' --before 'Calendar'
 dockutil --add '/Applications/Microsoft Teams.app' --label 'Microsoft Teams' --replacing 'Microsoft Teams' --before 'TV'
 dockutil --add '/Applications/Slack.app' --label 'Slack' --replacing 'Slack' --before 'TV'
 dockutil --add '/Applications/Spotify.app' --label 'Spotify' --replacing 'Spotify' --after 'TV'
@@ -198,14 +196,13 @@ dockutil --add '/Applications/Visual Studio Code.app' --label 'Visual Studio Cod
 dockutil --add '/Applications/iTerm.app' --label 'iTerm2' --replacing 'iTerm2' --after 'Visual Studio Codes'
 dockutil --add '/System/Applications/Utilities/Activity Monitor.app' --label 'Activity Monitor' --replacing 'Activity Monitor'
 
-
 killall Finder
 killall Dock
 
 echo "Creating folder structure..."
 [[ ! -d ~/Projects ]] && mkdir ~/Projects
 
-
+# Create ssh keys
 if [[ ! -f ~/.ssh/id_rsa]]; then
     ssh-keygen -t rsa
 
@@ -214,5 +211,7 @@ if [[ ! -f ~/.ssh/id_rsa]]; then
     read -p "Press [Enter] key after this..."
 fi
 
+# Clone this repo locally so you have access to the other resources
+git clone https://github.com/boldtbanan/osx_bootstrap.git ~/Projects/osx_bootstrap
 
 echo "Bootstrapping complete"
