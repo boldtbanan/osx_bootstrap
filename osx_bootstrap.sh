@@ -2,13 +2,19 @@
 # 
 # Bootstrap script for setting up a new OSX machine
 # 
+# Grab and run this file via
+#
+# curl -o- https://raw.githubusercontent.com/boldtbanan/osx_bootstrap/osx_bootstrap.sh | bash
+# 
 # This should be idempotent so it can be run multiple times.
 #
 # Some apps don't have a cask and so still need to be installed by hand. These
 # include:
 #
-# - Postgres.app (http://postgresapp.com/)
 # - Docker desktop (https://www.docker.com/products/docker-desktop)
+# - Macpass (https://macpassapp.org)
+# - Postgres.app (http://postgresapp.com/)
+# - Princexml
 #
 # Notes:
 #
@@ -17,8 +23,8 @@
 #   the Xcode libraries as the agreement hasn't been accepted yet. Otherwise, run
 #   the following:
 #
-# echo "Installing xcode-stuff"
-# xcode-select --install
+echo "Installing xcode-stuff"
+xcode-select --install
 #
 # Reading:
 #
@@ -28,6 +34,17 @@
 # - http://notes.jerzygangi.com/the-best-pgp-tutorial-for-mac-os-x-ever/
 
 echo "Starting bootstrapping"
+
+if [ -f ~/.ssh/id_rsa ]; then
+    echo "Public key already exists"
+else
+    echo "Generating ssh key..."
+
+    ssh-keygen -t rsa
+
+    echo "Please add this public key to Github \n"
+    echo "https://github.com/account/ssh \n"
+fi
 
 # Check for Homebrew, install if we don't have it
 if test ! $(which brew); then
@@ -41,45 +58,45 @@ curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/v0.37.2/install.sh | bash
 # Update homebrew recipes
 brew update
 
-PACKAGES=(
-    git
-    npm
-    postgresql
-    wget
-)
-
 echo "Installing packages..."
-brew install ${PACKAGES[@]}
+brew install awscli
+brew install dockutil
+brew install elixir
+brew install git
+brew install npm
+brew install postgresql
+brew install svn
+brew install wget
 
 echo "Cleaning up..."
 brew cleanup
 
-echo "Installing cask..."
-brew install caskroom/cask/brew-cask
-
-CASKS=(
-    firefox
-    github
-    google-chrome
-    google-drive
-    iterm2
-    microsoft-teams
-    psequel
-    slack
-    visual-studio-code
-    vlc
-)
+# echo "Installing cask..."
+# brew install homebrew/cask/brew-cask
 
 echo "Installing cask apps..."
-brew cask install ${CASKS[@]}
+brew install firefox
+brew install github
+brew install google-chrome
+brew install google-backup-and-sync
+brew install iterm2
+brew install microsoft-teams
+brew install postman
+brew install psequel
+brew install slack
+brew install spotify
+brew install visual-studio-code
+brew install vlc
 
 echo "Installing fonts..."
-brew tap caskroom/fonts
+brew tap homebrew/cask-fonts
 FONTS=(
     font-roboto
     font-jetbrains-mono
 )
-brew cask install ${FONTS[@]}
+# brew install ${FONTS[@]}
+brew install font-roboto
+brew install font-jetbrains-mono
 
 echo "Installing Ruby gems"
 RUBY_GEMS=(
@@ -91,6 +108,10 @@ sudo gem install ${RUBY_GEMS[@]}
 echo "Installing global npm packages..."
 npm install yarn -g
 
+echo "Installing phoenix"
+mix local.hex --force
+mix archive.install --force hex phx_new
+
 echo "Installing VSCode extensions..."
 # To make it easier to automate and configure VS Code, it is possible to list, 
 # install, and uninstall extensions from the command line. When identifying an 
@@ -100,19 +121,18 @@ echo "Installing VSCode extensions..."
 # code --list-extensions
 # code --install-extension ms-vscode.cpptools
 # code --uninstall-extension ms-vscode.csharp
-VSCODE_EXTENSIONS=(
-    esbenp.prettier-vscode
-    jakebecker.elixir-ls
-    CoenraadS.bracket-pair-colorizer
-    Shan.code-settings-sync
-    formulahendry.auto-rename-tag
-    eamodio.gitlens
-    donjayamanne.githistory
-    xabikos.JavaScriptSnippets
-    kamikillerto.vscode-colorize
-    vscode-icons-team.vscode-icons
-)
-
+code --install-extension esbenp.prettier-vscode
+code --install-extension jakebecker.elixir-ls
+code --install-extension CoenraadS.bracket-pair-colorizer
+code --install-extension Shan.code-settings-sync
+code --install-extension formulahendry.auto-rename-tag
+code --install-extension eamodio.gitlens
+code --install-extension donjayamanne.githistory
+code --install-extension xabikos.JavaScriptSnippets
+code --install-extension kamikillerto.vscode-colorize
+code --install-extension vscode-icons-team.vscode-icons
+code --install-extension zhuangtongfa.material-theme
+ 
 echo "Configuring OSX..."
 
 # Show filename extensions by default
@@ -120,14 +140,79 @@ defaults write NSGlobalDomain AppleShowAllExtensions -bool true
 
 # Enable tap-to-click
 defaults write com.apple.driver.AppleBluetoothMultitouch.trackpad Clicking -bool true
+defaults write com.apple.AppleMultitouchTrackpad Clicking -bool true
 defaults -currentHost write NSGlobalDomain com.apple.mouse.tapBehavior -int 1
+defaults write NSGlobalDomain com.apple.mouse.tapBehavior -int 1
 
 # Disable "natural" scroll
 defaults write NSGlobalDomain com.apple.swipescrolldirection -bool false
 
-echo "Creating folder structure..."
-[[ ! -d Projects ]] && mkdir Projects
+# Setting Dock auto-hide and magnification
+defaults write com.apple.dock autohide -bool true
+defaults write com.apple.dock autohide-time-modifier -float 0.5
+defaults write com.apple.dock tilesize -int 32
+defaults write com.apple.dock largesize -int 64
+defaults write com.apple.dock magnification -int 1
 
+#"Disable annoying backswipe in Chrome"
+defaults write com.google.Chrome AppleEnableSwipeNavigateWithScrolls -bool false
+
+#"Enabling Safari's debug menu"
+defaults write com.apple.Safari IncludeInternalDebugMenu -bool true
+
+# Don’t automatically rearrange Spaces based on most recent use
+defaults write com.apple.dock mru-spaces -bool false
+
+# Configure hot corners
+defaults write com.apple.dock wvous-bl-corner -int 12;
+defaults write com.apple.dock wvous-bl-modifier -int 0;
+defaults write com.apple.dock wvous-br-corner -int 4;
+defaults write com.apple.dock wvous-br-modifier -int 0;
+defaults write com.apple.dock wvous-tl-corner -int 3;
+defaults write com.apple.dock wvous-tl-modifier -int 0;
+defaults write com.apple.dock wvous-tr-corner -int 2;
+defaults write com.apple.dock wvous-tr-modifier -int 0;
+
+# Construct the dock
+dockutil --remove Launchpad
+dockutil --remove Safari
+dockutil --remove Messages
+dockutil --remove Mail
+dockutil --remove Maps
+dockutil --remove Photos
+dockutil --remove FaceTime
+dockutil --remove Contacts
+dockutil --remove Reminders
+dockutil --remove Notes
+dockutil --remove Music
+dockutil --remove Podcasts
+dockutil --remove News
+dockutil --remove 'App Store'
+
+dockutil --add '/Applications/Google Chrome.app' --label 'Google Chrome' --replacing 'Google Chrome' --after 'Firefox'
+dockutil --add '/Applications/Microsoft Teams.app' --label 'Microsoft Teams' --replacing 'Microsoft Teams' --before 'TV'
+dockutil --add '/Applications/Slack.app' --label 'Slack' --replacing 'Slack' --before 'TV'
+dockutil --add '/Applications/Spotify.app' --label 'Spotify' --replacing 'Spotify' --after 'TV'
+dockutil --add '/Applications/Github Desktop.app' --label 'Github Desktop' --replacing 'Github Desktop' --after 'Spotify'
+dockutil --add '/Applications/Visual Studio Code.app' --label 'Visual Studio Code' --replacing 'Visual Studio Code' --after 'Github Desktop'
+dockutil --add '/Applications/iTerm.app' --label 'iTerm2' --replacing 'iTerm2' --after 'Visual Studio Codes'
+dockutil --add '/System/Applications/Utilities/Activity Monitor.app' --label 'Activity Monitor' --replacing 'Activity Monitor'
+
+
+killall Finder
+killall Dock
+
+echo "Creating folder structure..."
+[[ ! -d ~/Projects ]] && mkdir ~/Projects
+
+
+if [[ ! -f ~/.ssh/id_rsa]]; then
+    ssh-keygen -t rsa
+
+    echo "Please add this public key to Github \n"
+    echo "https://github.com/account/ssh \n"
+    read -p "Press [Enter] key after this..."
+fi
 
 
 echo "Bootstrapping complete"
