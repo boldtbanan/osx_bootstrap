@@ -110,9 +110,9 @@ echo "Installing global npm packages..."
 npm install yarn -g
 
 echo "Installing elixir & phoenix"
-mix local.hex --force
-mix archive.install --force hex phx_new
-mix local.rebar --force
+# mix local.hex --force
+# mix archive.install --force hex phx_new
+# mix local.rebar --force
 
 echo "Installing VSCode extensions..."
 # To make it easier to automate and configure VS Code, it is possible to list, 
