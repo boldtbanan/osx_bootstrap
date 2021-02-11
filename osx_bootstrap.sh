@@ -67,7 +67,6 @@ brew install npm
 brew install postgresql
 brew install svn
 brew install wget
-brew install xclip
 
 echo "Cleaning up..."
 brew cleanup
@@ -221,3 +220,5 @@ fi
 [[ ! -d ~/Projects/osx_bootstrap ]] && git clone https://github.com/boldtbanan/osx_bootstrap.git ~/Projects/osx_bootstrap
 
 echo "Bootstrapping complete"
+
+
