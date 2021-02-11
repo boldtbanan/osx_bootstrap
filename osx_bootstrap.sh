@@ -87,6 +87,7 @@ brew install slack
 brew install spotify
 brew install visual-studio-code
 brew install vlc
+brew install zoom
 
 echo "Installing fonts..."
 brew tap homebrew/cask-fonts
