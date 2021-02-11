@@ -133,7 +133,6 @@ code --install-extension donjayamanne.githistory
 code --install-extension xabikos.JavaScriptSnippets
 code --install-extension kamikillerto.vscode-colorize
 code --install-extension vscode-icons-team.vscode-icons
-code --install-extension zhuangtongfa.material-theme
  
 echo "Configuring OSX..."
 
