@@ -2,9 +2,8 @@
 # 
 # Bootstrap script for setting up a new OSX machine
 # 
-# Grab and run this file via
-#
-# curl -o- https://raw.githubusercontent.com/boldtbanan/osx_bootstrap/main/osx_bootstrap.sh | bash
+# Grab this file and run it locally. Executing via curl seems to fail on the 
+# elixir installs.
 # 
 # This should be idempotent so it can be run multiple times.
 #
