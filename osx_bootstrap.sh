@@ -145,6 +145,10 @@ defaults write com.apple.AppleMultitouchTrackpad Clicking -bool true
 defaults -currentHost write NSGlobalDomain com.apple.mouse.tapBehavior -int 1
 defaults write NSGlobalDomain com.apple.mouse.tapBehavior -int 1
 
+#Enable dragging from touchpad
+defaults write com.apple.AppleMultitouchTrackpad Dragging -bool true
+defaults write com.apple.driver.AppleBluetoothMultitouch.trackpad Dragging -bool true
+
 # Disable "natural" scroll
 defaults write NSGlobalDomain com.apple.swipescrolldirection -bool false
 
@@ -203,12 +207,14 @@ echo "Creating folder structure..."
 [[ ! -d ~/Projects ]] && mkdir ~/Projects
 
 # Create ssh keys
-if [[ ! -f ~/.ssh/id_rsa]]; then
+if [[ ! -f ~/.ssh/id_rsa ]]; then
     ssh-keygen -t rsa
 
     echo "Please add this public key to Github \n"
     echo "https://github.com/account/ssh \n"
     read -p "Press [Enter] key after this..."
+else
+    echo "SSH keys already exist"
 fi
 
 # Clone this repo locally so you have access to the other resources
