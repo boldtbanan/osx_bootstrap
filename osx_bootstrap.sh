@@ -209,9 +209,7 @@ echo "Creating folder structure..."
 if [[ ! -f ~/.ssh/id_rsa ]]; then
     ssh-keygen -t rsa
 
-    echo "Please add this public key to Github \n"
-    echo "https://github.com/account/ssh \n"
-    read -p "Press [Enter] key after this..."
+    echo "SSH key generated"
 else
     echo "SSH keys already exist"
 fi
@@ -221,4 +219,10 @@ fi
 
 echo "Bootstrapping complete"
 
+pbcopy < ~/.ssh/id_rsa.pub
+
+echo "Your public SSH key has been copied to your clipboard"
+echo "Please add this public key to Github and Bitbucket \n"
+echo "https://github.com/account/ssh \n"
+echo "https://bitbucket.org/account/settings/ssh-keys/ \n"
 
