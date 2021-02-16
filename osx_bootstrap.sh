@@ -165,8 +165,8 @@ defaults write com.apple.Safari IncludeInternalDebugMenu -bool true
 defaults write com.apple.dock mru-spaces -bool false
 
 # Configure hot corners
-defaults write com.apple.dock wvous-bl-corner -int 12;
-defaults write com.apple.dock wvous-bl-modifier -int 0;
+defaults write com.apple.dock wvous-bl-corner -int 1;
+defaults write com.apple.dock wvous-bl-modifier -int 1048576;
 defaults write com.apple.dock wvous-br-corner -int 4;
 defaults write com.apple.dock wvous-br-modifier -int 0;
 defaults write com.apple.dock wvous-tl-corner -int 3;
