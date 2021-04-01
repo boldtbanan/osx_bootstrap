@@ -91,8 +91,10 @@ brew install zoom
 echo "Installing fonts..."
 brew tap homebrew/cask-fonts
 FONTS=(
-    font-roboto
+    font-cabin-sketch
     font-jetbrains-mono
+    font-raleway
+    font-roboto
 )
 # brew install ${FONTS[@]}
 brew install font-roboto
