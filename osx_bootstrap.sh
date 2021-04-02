@@ -90,15 +90,17 @@ brew install zoom
 
 echo "Installing fonts..."
 brew tap homebrew/cask-fonts
-FONTS=(
-    font-cabin-sketch
-    font-jetbrains-mono
-    font-raleway
-    font-roboto
-)
+# FONTS=(
+#     font-cabin-sketch
+#     font-jetbrains-mono
+#     font-raleway
+#     font-roboto
+# )
 # brew install ${FONTS[@]}
 brew install font-roboto
 brew install font-jetbrains-mono
+brew install font-cabin-sketch
+brew install font-raleway
 
 echo "Installing Ruby gems"
 RUBY_GEMS=(
