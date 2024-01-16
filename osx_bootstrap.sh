@@ -51,8 +51,9 @@ if test ! $(which brew); then
     /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/master/install.sh)"
 fi
 
-#install nvm
-curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/v0.37.2/install.sh | bash
+#install nvm & node
+curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/v0.38.0/install.sh | bash
+nvm install 16
 
 # Update homebrew recipes
 brew update
@@ -60,12 +61,13 @@ brew update
 echo "Installing packages..."
 brew install awscli
 brew install dockutil
-brew install elixir
+# brew install elixir
 brew install git
-brew install npm
+# brew install npm
 brew install postgresql
 brew install svn
 brew install wget
+brew install asdf
 
 echo "Cleaning up..."
 brew cleanup
@@ -87,6 +89,8 @@ brew install spotify
 brew install visual-studio-code
 brew install vlc
 brew install zoom
+brew install autoconf
+brew install openssl@1.1
 
 echo "Installing fonts..."
 brew tap homebrew/cask-fonts
@@ -113,6 +117,11 @@ echo "Installing global npm packages..."
 npm install yarn -g
 
 echo "Installing elixir & phoenix"
+asdf plugin-add erlang https://github.com/asdf-vm/asdf-erlang.git
+asdf install erlang 23
+asdf plugin-add elixir https://github.com/asdf-vm/asdf-elixir.git
+asdf install elixir 13.1
+
 mix local.hex --force
 mix archive.install --force hex phx_new
 mix local.rebar --force
